@@ -19,27 +19,29 @@ open class DropboxTransportClient {
         self.init(accessToken: accessToken, baseHosts: nil, userAgent: nil, selectUser: selectUser)
     }
 
-    public init(accessToken: String, baseHosts: [String: String]?, userAgent: String?, selectUser: String?, sessionDelegate: SessionDelegate? = nil, backgroundSessionDelegate: SessionDelegate? = nil, serverTrustPolicyManager: ServerTrustPolicyManager? = nil) {
+    
+    public init(accessToken: String, baseHosts: [String: String]?, userAgent: String?, selectUser: String?, sessionDelegate: SessionDelegate? = nil, backgroundSessionDelegate: SessionDelegate? = nil, serverTrustPolicyManager: ServerTrustPolicyManager? = nil, backgroundSessionConfig: URLSessionConfiguration? = nil, backgroundStartRequestsImmediately: Bool?) {
+        
         let config = URLSessionConfiguration.default
         let delegate = sessionDelegate ?? SessionDelegate()
         let serverTrustPolicyManager = serverTrustPolicyManager ?? nil
-
+        
         let manager = SessionManager(configuration: config, delegate: delegate, serverTrustPolicyManager: serverTrustPolicyManager)
         manager.startRequestsImmediately = false
-
-        let backgroundConfig = URLSessionConfiguration.background(withIdentifier: "com.dropbox.SwiftyDropbox." + UUID().uuidString)
+        
+        let backgroundConfig = backgroundSessionConfig ?? URLSessionConfiguration.background(withIdentifier: "com.dropbox.SwiftyDropbox." + UUID().uuidString)
         let backgroundDelegate = backgroundSessionDelegate ?? SessionDelegate()
         let backgroundManager = SessionManager(configuration: backgroundConfig, delegate: backgroundDelegate, serverTrustPolicyManager: serverTrustPolicyManager)
-        backgroundManager.startRequestsImmediately = false
-
+        backgroundManager.startRequestsImmediately = backgroundStartRequestsImmediately ?? false
+        
         let defaultBaseHosts = [
             "api": "https://api.dropbox.com/2",
             "content": "https://api-content.dropbox.com/2",
             "notify": "https://notify.dropboxapi.com/2",
             ]
-
-        let defaultUserAgent = "OfficialDropboxSwiftSDKv2/\(DropboxTransportClient.version)"
-
+        
+        let defaultUserAgent = "OfficialDropboxSwiftSDKv2/\(ASDropboxTransportClient.version)"
+        
         self.manager = manager
         self.backgroundManager = backgroundManager
         self.accessToken = accessToken
