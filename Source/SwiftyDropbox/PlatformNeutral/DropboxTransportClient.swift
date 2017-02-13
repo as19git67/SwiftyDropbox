@@ -20,7 +20,7 @@ open class DropboxTransportClient {
     }
 
     
-    public init(accessToken: String, baseHosts: [String: String]?, userAgent: String?, selectUser: String?, sessionDelegate: SessionDelegate? = nil, backgroundSessionDelegate: SessionDelegate? = nil, serverTrustPolicyManager: ServerTrustPolicyManager? = nil, backgroundSessionConfig: URLSessionConfiguration? = nil, backgroundStartRequestsImmediately: Bool? = false) {
+    public init(accessToken: String, baseHosts: [String: String]?, userAgent: String?, selectUser: String?, sessionDelegate: SessionDelegate? = nil, backgroundSessionDelegate: SessionDelegate? = nil, serverTrustPolicyManager: ServerTrustPolicyManager? = nil, backgroundSessionConfig: URLSessionConfiguration? = nil, backgroundStartRequestsImmediately: Bool = false) {
         
         let config = URLSessionConfiguration.default
         let delegate = sessionDelegate ?? SessionDelegate()
