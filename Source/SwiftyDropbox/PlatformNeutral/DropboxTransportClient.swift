@@ -40,7 +40,7 @@ open class DropboxTransportClient {
             "notify": "https://notify.dropboxapi.com/2",
             ]
         
-        let defaultUserAgent = "OfficialDropboxSwiftSDKv2/\(ASDropboxTransportClient.version)"
+        let defaultUserAgent = "OfficialDropboxSwiftSDKv2/\(DropboxTransportClient.version)"
         
         self.manager = manager
         self.backgroundManager = backgroundManager
