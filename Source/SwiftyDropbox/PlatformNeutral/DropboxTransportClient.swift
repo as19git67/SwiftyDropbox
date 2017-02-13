@@ -20,7 +20,7 @@ open class DropboxTransportClient {
     }
 
     
-    public init(accessToken: String, baseHosts: [String: String]?, userAgent: String?, selectUser: String?, sessionDelegate: SessionDelegate? = nil, backgroundSessionDelegate: SessionDelegate? = nil, serverTrustPolicyManager: ServerTrustPolicyManager? = nil, backgroundSessionConfig: URLSessionConfiguration? = nil, backgroundStartRequestsImmediately: Bool?) {
+    public init(accessToken: String, baseHosts: [String: String]?, userAgent: String?, selectUser: String?, sessionDelegate: SessionDelegate? = nil, backgroundSessionDelegate: SessionDelegate? = nil, serverTrustPolicyManager: ServerTrustPolicyManager? = nil, backgroundSessionConfig: URLSessionConfiguration? = nil, backgroundStartRequestsImmediately: Bool? = false) {
         
         let config = URLSessionConfiguration.default
         let delegate = sessionDelegate ?? SessionDelegate()
@@ -32,7 +32,7 @@ open class DropboxTransportClient {
         let backgroundConfig = backgroundSessionConfig ?? URLSessionConfiguration.background(withIdentifier: "com.dropbox.SwiftyDropbox." + UUID().uuidString)
         let backgroundDelegate = backgroundSessionDelegate ?? SessionDelegate()
         let backgroundManager = SessionManager(configuration: backgroundConfig, delegate: backgroundDelegate, serverTrustPolicyManager: serverTrustPolicyManager)
-        backgroundManager.startRequestsImmediately = backgroundStartRequestsImmediately ?? false
+        backgroundManager.startRequestsImmediately = backgroundStartRequestsImmediately
         
         let defaultBaseHosts = [
             "api": "https://api.dropbox.com/2",
